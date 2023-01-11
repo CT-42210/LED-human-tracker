@@ -1,4 +1,6 @@
 import cv2
+import numpy
+import imutils
 
 # Open the video capture
 cap = cv2.VideoCapture(0)
@@ -41,15 +43,17 @@ while True:
 
     # Draw the bounding box on the frame
     for box in boxes:
-        x, y, w, h = box
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        for c in imutils.grab_contours(cnts):
 
-        # Display the resulting frame
-        cv2.imshow("Motion Detection", frame)
+            (x, y, w, h) = cv2.boundingRect(c)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-        # Wait for the user to press a key
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+            # Display the resulting frame
+            cv2.imshow("Motion Detection", frame)
+
+            # Wait for the user to press a key
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
         # Release the video capture
     cap.release()

@@ -1,58 +1,43 @@
 import cv2
+import numpy as np
+import imutils
 
-# Open the video capture
+# Start capturing the video
 cap = cv2.VideoCapture(0)
 
-# Read the first frame
-ret, frame = cap.read()
+# Create an empty image to store the background
+bg = None
+
+# Loop through the first 30 frames
+for i in range(30):
+    ret, frame = cap.read()
+    if bg is None:
+        bg = frame.copy().astype("float")
+    else:
+        cv2.accumulateWeighted(frame, bg, 0.5)
 
 while True:
-    # Read the next frame
-    ret, next_frame = cap.read()
+    ret, frame = cap.read()
+    frame_delta = cv2.absdiff(frame, cv2.convertScaleAbs(bg))
 
-    # Check if the frames were successfully read
-    if not ret:
-        break
+    thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
 
-    # Calculate the absolute difference between the frames
-    diff = cv2.absdiff(frame, next_frame)
+    kernel = np.ones((3, 3), np.uint8)
+    thresh = cv2.dilate(thresh, kernel, iterations=2)
+    gray = cv2.cvtColor(thresh, cv2.COLOR_BGR2GRAY)
+    cnts = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Convert the difference image to grayscale
-    gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
+    cnts = imutils.grab_contours(cnts)
+    args = {"min_area": 500}
 
-    # Threshold the difference image to create a binary mask
-    _, mask = cv2.threshold(gray, 25, 255, cv2.THRESH_BINARY)
+    for c in cnts:
+        if cv2.contourArea(c) < args["min_area"]:
+            continue
+        (x, y, w, h) = cv2.boundingRect(c)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    # Dilate the mask to fill in holes
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-    mask = cv2.dilate(mask, kernel, iterations=2)
+        cv2.imshow("frame", frame)
+        key = cv2.waitKey(1) & 0xFF
 
-    # Find contours in the mask
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    # Extract bounding boxes from the contours
-    boxes = [cv2.boundingRect(contour) for contour in contours]
-
-    # Apply non-maximum suppression to merge overlapping boxes
-    confidence_scores = [1.0] * len(boxes)
-    confidence_threshold = 0.5
-    overlap_threshold = 0.5
-    boxes = cv2.dnn.NMSBoxes(boxes, confidence_scores, confidence_threshold, overlap_threshold)
-
-    # Draw the bounding box on the frame
-    for box in boxes:
-        x, y, w, h = box
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-
-        # Display the resulting frame
-        cv2.imshow("Motion Detection", frame)
-
-        # Wait for the user to press a key
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-        # Release the video capture
-    cap.release()
-
-    # Destroy all windows
-    cv2.destroyAllWindows()
+cap.release()
+cv2.destroyAllWindows()
