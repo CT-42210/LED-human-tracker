@@ -1,62 +1,55 @@
 import cv2
-import numpy
-import imutils
 
-# Open the video capture
-cap = cv2.VideoCapture(0)
+# Initialize the human detector
+human_detector = cv2.HOGDescriptor()
+human_detector.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-# Read the first frame
-ret, frame = cap.read()
+# Initialize the background subtractor
+bg_subtractor = cv2.createBackgroundSubtractorMOG2()
+
+# Open the video
+cap = cv2.VideoCapture("video.mp4")
 
 while True:
-    # Read the next frame
-    ret, next_frame = cap.read()
+    # Read the current frame
+    _, frame = cap.read()
 
-    # Check if the frames were successfully read
-    if not ret:
+    # Apply the human detector
+    humans, _ = human_detector.detectMultiScale(frame, winStride=(8, 8), padding=(32, 32), scale=1.05)
+
+    # Apply the background subtractor
+    fgmask = bg_subtractor.apply(frame)
+
+    # Find contours in the foreground mask
+    contours, _ = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Initialize an empty list to hold the bounding boxes
+    boxes = []
+
+    # Add the bounding boxes for the humans
+    for (x, y, w, h) in humans:
+        boxes.append((x, y, x + w, y + h))
+
+    # Add the bounding boxes for the contours
+    for contour in contours:
+        (x, y, w, h) = cv2.boundingRect(contour)
+        boxes.append((x, y, x + w, y + h))
+
+    # Apply non-maximum suppression to remove overlapping boxes
+    boxes = cv2.dnn.NMSBoxes(boxes, scores, 0.5, 0.5)
+
+    # Draw the bounding boxes on the frame
+    for box in boxes:
+        (x, y, w, h) = box
+        cv2.rectangle(frame, (x, y), (w, h), (0, 0, 255), 2)
+
+    # Show the frame
+    cv2.imshow("Human and Motion Detection", frame)
+
+    # Break the loop if the user presses "q"
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
-    # Calculate the absolute difference between the frames
-    diff = cv2.absdiff(frame, next_frame)
-
-    # Convert the difference image to grayscale
-    gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
-
-    # Threshold the difference image to create a binary mask
-    _, mask = cv2.threshold(gray, 25, 255, cv2.THRESH_BINARY)
-
-    # Dilate the mask to fill in holes
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-    mask = cv2.dilate(mask, kernel, iterations=2)
-
-    # Find contours in the mask
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    # Extract bounding boxes from the contours
-    boxes = [cv2.boundingRect(contour) for contour in contours]
-
-    # Apply non-maximum suppression to merge overlapping boxes
-    confidence_scores = [1.0] * len(boxes)
-    confidence_threshold = 0.5
-    overlap_threshold = 0.5
-    boxes = cv2.dnn.NMSBoxes(boxes, confidence_scores, confidence_threshold, overlap_threshold)
-
-    # Draw the bounding box on the frame
-    for box in boxes:
-        for c in imutils.grab_contours(cnts):
-
-            (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-
-            # Display the resulting frame
-            cv2.imshow("Motion Detection", frame)
-
-            # Wait for the user to press a key
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        # Release the video capture
-    cap.release()
-
-    # Destroy all windows
-    cv2.destroyAllWindows()
+# Release the video capture and close the window
+cap.release()
+cv2.destroyAll
