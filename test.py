@@ -1,5 +1,7 @@
-import cv2, time, numpy, pandas
 from datetime import datetime
+
+import cv2
+import pandas
 
 static_back = None
 
@@ -41,7 +43,8 @@ while True:
     cnts, _ = cv2.findContours(thresh_frame.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     for contour in cnts:
-        if cv2.contourArea(contour) < 1000:
+        scores = cv2.contourArea(contour)
+        if scores < 1000:
             continue
         motion = 1
 

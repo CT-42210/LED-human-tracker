@@ -38,6 +38,8 @@ while True:
 
         cv2.imshow("frame", frame)
         key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
+            break
 
 cap.release()
 cv2.destroyAllWindows()
