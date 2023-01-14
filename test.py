@@ -49,11 +49,8 @@ while True:
         motion = 1
 
         (x, y, w, h) = cv2.boundingRect(contour)
-        boxes.append((x, y, x + w, y + h))
 
         cv2.rectangle(display_frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
-
-        boxes = cv2.dnn.NMSBoxes(boxes, scores, 0.5, 0.5)
 
     motion_list.append(motion)
 
