@@ -12,6 +12,7 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
+display_setting = os.environ['DISPLAY']
 blur_int = int(os.environ['BLUR'])
 scores_int = int(os.environ['SCORES'])
 thresh_int = int(os.environ['THRESH'])
@@ -69,13 +70,17 @@ while True:
     if motion_list[-1] == 0 and motion_list[-2] == 1:
         time.append(datetime.now())
 
-    cv2.imshow("Gray Frame", gray2)
+    if "gray" in display_setting:
+        cv2.imshow("Gray Frame", gray2)
 
-    cv2.imshow("Difference Frame", diff_frame)
+    if "diff" in display_setting:
+        cv2.imshow("Difference Frame", diff_frame)
 
-    cv2.imshow("Threshold Frame", thresh_frame)
+    if "thresh" in display_setting:
+        cv2.imshow("Threshold Frame", thresh_frame)
 
-    cv2.imshow("Color Frame", display_frame)
+    if "color" in display_setting:
+        cv2.imshow("Color Frame", display_frame)
 
     frame = frame2
 
