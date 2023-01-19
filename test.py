@@ -35,7 +35,7 @@ while True:
 
     diff_frame = cv2.absdiff(gray1, gray2)
 
-    thresh_frame = cv2.threshold(diff_frame, 30, 255, cv2.THRESH_BINARY)[1]
+    thresh_frame = cv2.threshold(diff_frame, 20, 255, cv2.THRESH_BINARY)[1]
     thresh_frame = cv2.dilate(thresh_frame, None, iterations=2)
 
     display_frame = frame2.copy()
