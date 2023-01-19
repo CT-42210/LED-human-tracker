@@ -1,4 +1,6 @@
 from datetime import datetime
+from dotenv.main import load_dotenv
+import os
 
 import cv2
 import pandas
@@ -9,7 +11,9 @@ motion_list = [None, None]
 
 time = []
 
-boxes = []
+load_dotenv()
+blur_int = int(os.environ['BLUR'])
+scores_int = int(os.environ['SCORES'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
@@ -26,8 +30,8 @@ while True:
     gray1 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
 
-    gray1 = cv2.GaussianBlur(gray1, (5, 5), 0)
-    gray2 = cv2.GaussianBlur(gray2, (5, 5), 0)
+    gray1 = cv2.GaussianBlur(gray1, (blur_int, blur_int), 0)
+    gray2 = cv2.GaussianBlur(gray2, (blur_int, blur_int), 0)
 
     if static_back is None:
         static_back = gray1
@@ -44,7 +48,7 @@ while True:
 
     for contour in cnts:
         scores = cv2.contourArea(contour)
-        if scores < 1000:
+        if scores < scores_int:
             continue
         motion = 1
 
