@@ -19,6 +19,8 @@ thresh_int = int(os.environ['THRESH'])
 df = pandas.DataFrame(columns=["Start", "End"])
 
 video = cv2.VideoCapture(0)
+video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 check, frame = video.read()
 
