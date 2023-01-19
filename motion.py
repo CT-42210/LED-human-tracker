@@ -14,6 +14,7 @@ time = []
 load_dotenv()
 blur_int = int(os.environ['BLUR'])
 scores_int = int(os.environ['SCORES'])
+thresh_int = int(os.environ['THRESH'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
@@ -39,7 +40,7 @@ while True:
 
     diff_frame = cv2.absdiff(gray1, gray2)
 
-    thresh_frame = cv2.threshold(diff_frame, 20, 255, cv2.THRESH_BINARY)[1]
+    thresh_frame = cv2.threshold(diff_frame, thresh_int, 255, cv2.THRESH_BINARY)[1]
     thresh_frame = cv2.dilate(thresh_frame, None, iterations=2)
 
     display_frame = frame2.copy()
