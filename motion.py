@@ -12,10 +12,14 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
-display_setting = list(os.environ['DISPLAY'])
 blur_int = int(os.environ['BLUR'])
+print(blur_int)
 scores_int = int(os.environ['SCORES'])
+print(scores_int)
 thresh_int = int(os.environ['THRESH'])
+print(thresh_int)
+display_setting = os.environ['DISPLAY']
+print(display_setting)
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
@@ -70,16 +74,16 @@ while True:
     if motion_list[-1] == 0 and motion_list[-2] == 1:
         time.append(datetime.now())
 
-    if "gray" in display_setting:
+    if any(ext == "gray" for ext in display_setting):
         cv2.imshow("Gray Frame", gray2)
 
-    if "diff" in display_setting:
+    if any(ext == "diff" for ext in display_setting):
         cv2.imshow("Difference Frame", diff_frame)
 
-    if "thresh" in display_setting:
+    if any(ext == "thresh" for ext in display_setting):
         cv2.imshow("Threshold Frame", thresh_frame)
 
-    if "color" in display_setting:
+    if any(ext == 'color' for ext in display_setting):
         cv2.imshow("Color Frame", display_frame)
 
     frame = frame2
