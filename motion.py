@@ -12,7 +12,7 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
-display_setting = os.environ['DISPLAY']
+display_setting = list(os.environ['DISPLAY'])
 blur_int = int(os.environ['BLUR'])
 scores_int = int(os.environ['SCORES'])
 thresh_int = int(os.environ['THRESH'])
