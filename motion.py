@@ -18,7 +18,7 @@ scores_int = int(os.environ['SCORES'])
 print(scores_int)
 thresh_int = int(os.environ['THRESH'])
 print(thresh_int)
-display_setting = os.environ['DISPLAY']
+display_setting = list(os.environ['DISPLAY_CONFIG'])
 print(display_setting)
 
 df = pandas.DataFrame(columns=["Start", "End"])
@@ -74,16 +74,16 @@ while True:
     if motion_list[-1] == 0 and motion_list[-2] == 1:
         time.append(datetime.now())
 
-    if any(ext == "gray" for ext in display_setting):
+    if any(ext == "g" for ext in display_setting):
         cv2.imshow("Gray Frame", gray2)
 
-    if any(ext == "diff" for ext in display_setting):
+    if any(ext == "d" for ext in display_setting):
         cv2.imshow("Difference Frame", diff_frame)
 
-    if any(ext == "thresh" for ext in display_setting):
+    if any(ext == "t" for ext in display_setting):
         cv2.imshow("Threshold Frame", thresh_frame)
 
-    if any(ext == 'color' for ext in display_setting):
+    if any(ext == 'c' for ext in display_setting):
         cv2.imshow("Color Frame", display_frame)
 
     frame = frame2
