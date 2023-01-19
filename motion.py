@@ -12,20 +12,18 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
-blur_int = int(os.environ['BLUR'])
-print(blur_int)
-scores_int = int(os.environ['SCORES'])
-print(scores_int)
-thresh_int = int(os.environ['THRESH'])
-print(thresh_int)
 display_setting = list(os.environ['DISPLAY_CONFIG'])
-print(display_setting)
+blur_int = int(os.environ['BLUR'])
+scores_int = int(os.environ['SCORES'])
+thresh_int = int(os.environ['THRESH'])
+x_res_int = int(os.environ['X_RES'])
+y_res_int = int(os.environ['Y_RES'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
 video = cv2.VideoCapture(0)
-video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+video.set(cv2.CAP_PROP_FRAME_WIDTH, x_res_int)
+video.set(cv2.CAP_PROP_FRAME_HEIGHT, y_res_int)
 
 check, frame = video.read()
 
