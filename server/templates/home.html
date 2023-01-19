@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Button Example</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button_stuff.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/rgb_stripe.css">
+  </head>
+  <body>
 
+<div id="stripe" style="width:100%; height:10px; background-color: red; animation: change-color 5s infinite;">
+<div class="ripple"></div>
+</div>
+
+<form id="toButtonForm" method="POST" action="/buttons">
+    <input type="submit" name="button" value="Color Form" class="button">
+</form>
+
+ <form id="buttonForm" method="POST" action="/button_press">
+        <div style="display: flex;">
+            <input type="submit" name="button" value="Development..." class="button">
+            <input type="submit" name="button" value="Development..." class="button">
+        </div>
+</form>
+
+<form method="POST" action="/">
+    <input type="submit" name="navbar" value="Navbar" class="button navbar-button">
+</form>
+
+</body>
+</html>
