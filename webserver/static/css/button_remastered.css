@@ -1,0 +1,45 @@
+        /* existing styles for the buttons */
+        .buttonN {
+            padding: 15px 30px;
+            border-radius: 20px;
+            background-color: #87CEFA;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 20px;
+            position: relative;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+        }
+        .buttonN:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+        .buttonN:hover {
+            background-color: #00BFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.3);
+        }
+        .buttonN:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+        .buttonN:hover:before {
+            width: 100%;
+        }
+        .navbar-buttonN {
+            background-color: #ffa500;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
