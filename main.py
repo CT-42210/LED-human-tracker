@@ -29,8 +29,9 @@ while True:
     # Draw bounding boxes on the frame
     for box in boxes:
         print(box.shape)
-        #xmin, ymin, xmax, ymax = box
-        #cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 0, 255), 2)
+        for i in range(len(boxes[0])):
+            xmin, ymin, xmax, ymax = box[i]
+        cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 0, 255), 2)
 
     # Display the resulting frame
     cv2.imshow('Human Detection', frame)
