@@ -19,6 +19,7 @@ while True:
     # Pre-processing: resize and normalize
     frame = cv2.resize(frame, (320, 320))
     frame = frame / 255.0
+    frame = frame.astype("uint8")
 
     # Run inference
     interpreter.set_tensor(input_details[0]['index'], [frame])
