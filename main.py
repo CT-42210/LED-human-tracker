@@ -31,7 +31,7 @@ while True:
         print(box.shape)
         for i in range(len(boxes[0])):
             xmin, ymin, xmax, ymax = box[i]
-            box = box.reshape(4)
+            box = box.reshape(-1,4)
         cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 0, 255), 2)
 
     # Display the resulting frame
