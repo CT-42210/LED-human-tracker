@@ -4,17 +4,17 @@ read -p "Are you sure? [Y/n]" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  #sudo apt update && sudo apt upgrade -y && sudo apt autoremove
-#
-  #echo 'interface eth0' /etc/dhcpcd.conf
-  #echo 'nogateway' /etc/dhcpcd.conf
-#
-  #cd Desktop || exit
-  #git clone https://github.com/CT-42210/LED-human-tracker
-#
-  #cd LED-human-tracker || exit
-  #git config pull.rebase false
-  #mv git-pull.sh /home/pi
+  sudo apt update && sudo apt upgrade -y && sudo apt autoremove
+
+  echo 'interface eth0' /etc/dhcpcd.conf
+  echo 'nogateway' /etc/dhcpcd.conf
+
+  cd Desktop || exit
+  git clone https://github.com/CT-42210/LED-human-tracker
+
+  cd LED-human-tracker || exit
+  git config pull.rebase false
+  mv git-pull.sh /home/pi
 
   cd || exit
 
