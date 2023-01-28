@@ -12,16 +12,18 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
-display_setting = list(os.environ['DISPLAY'])
+display_setting = list(os.environ['DISPLAY_CONFIG'])
 blur_int = int(os.environ['BLUR'])
 scores_int = int(os.environ['SCORES'])
 thresh_int = int(os.environ['THRESH'])
+x_res_int = int(os.environ['X_RES'])
+y_res_int = int(os.environ['Y_RES'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
 video = cv2.VideoCapture(0)
-video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+video.set(cv2.CAP_PROP_FRAME_WIDTH, x_res_int)
+video.set(cv2.CAP_PROP_FRAME_HEIGHT, y_res_int)
 
 check, frame = video.read()
 
@@ -70,16 +72,16 @@ while True:
     if motion_list[-1] == 0 and motion_list[-2] == 1:
         time.append(datetime.now())
 
-    if "gray" in display_setting:
+    if any(ext == "g" for ext in display_setting):
         cv2.imshow("Gray Frame", gray2)
 
-    if "diff" in display_setting:
+    if any(ext == "d" for ext in display_setting):
         cv2.imshow("Difference Frame", diff_frame)
 
-    if "thresh" in display_setting:
+    if any(ext == "t" for ext in display_setting):
         cv2.imshow("Threshold Frame", thresh_frame)
 
-    if "color" in display_setting:
+    if any(ext == 'c' for ext in display_setting):
         cv2.imshow("Color Frame", display_frame)
 
     frame = frame2

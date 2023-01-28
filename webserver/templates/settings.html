@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Future Site</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button_remastered.css">
+    <style>
+      /* Add gradient background */
+      body {
+        background: linear-gradient(to right, #87CEFA, #ADD8E6);;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; /* Add position relative for the shapes */
+      }
+      /* Add button styling */
+      .button {
+        background-color: #fff;
+        color: #0072ff;
+        border: none;
+        padding: 20px 30px; /* Increase button size */
+        font-size: 20px; /* Increase button text size */
+        border-radius: 10px; /* Increase button border radius */
+        text-transform: uppercase;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0px 0px 10px #0072ff; /* Add box-shadow */
+        z-index:1;
+      }
+      /* Change button color on hover */
+      .button:hover {
+        background-color: #0072ff;
+        color: #fff;
+      }
+      /* Add animation */
+      .button:active {
+        transform: translateY(4px); /* Move button down on press */
+        box-shadow: 0px 0px 5px #0072ff; /* Decrease box-shadow on press */
+      }
+      /* Add grid layout for buttons */
+      .button-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+        grid-row-gap: 10px; /* Add row gap */
+        grid-column-gap: 10px; /* Add column gap */
+      }
+      /* Add geometric shapes */
+      .shape {
+        position: absolute; /* Position shapes absolute */
+        width: 100px; /* Set shape width */
+        height: 100px; /* Set shape height */
+        border-radius: 0%; /* Add border-radius */
+        animation: change-color 5s linear infinite; /* Add animation */
+      }
+      /* Add animation keyframes */
+      @keyframes change-color {
+        0% {
+          background-color: rgb(255, 0, 0);
+        }
+        25% {
+          background-color: rgb(0, 255, 0);
+        }
+        50% {
+          background-color: rgb(0, 0, 255);
+        }
+        75% {
+          background-color: rgb(255, 255, 0);
+        }
+        100% {
+          background-color: rgb(255, 0, 0);
+        }
+      }
+
+      /* Add lines connecting the squares */
+.shape::before,
+.shape::after {
+  content: "";
+  position: absolute;
+  width: 20px; /* set the width of the lines */
+  height: 80%;
+  background-color: #fff; /* set the color of the lines */
+}
+
+.shape::before {
+  left: -20px; /* set the position of the lines */
+  transform: skewX(45deg); /* add a skew transformation */
+}
+
+.shape::after {
+  right: -20px; /* set the position of the lines */
+  transform: skewX(-45deg); /* add a skew transformation */
+}
+/* Add styling for the Navbar button */
+.navbar-button-container {
+  position: absolute;
+  top: 20px; /* set the top position */
+  right: 20px; /* set the right position */
+}
+
+.navbar-button {
+  background-color: #fff; /* set the background color */
+  color: #0072ff; /* set the text color */
+  padding: 10px 20px; /* set the padding */
+  font-size: 18px; /* set the font size */
+  text-transform: uppercase; /* set the text-transform */
+  border-radius: 10px; /* set the border-radius */
+  text-decoration: none; /* remove the underline */
+  box-shadow: 0px 0px 10px #0072ff; /* add a box-shadow */
+  transition: background-color 0.3s ease;
+}
+
+/* Change button color on hover */
+.navbar-button:hover {
+  background-color: #0072ff;
+  color: #fff;
+}
+
+/* Add animation */
+.navbar-button:active {
+  transform: translateY(4px); /* move the button down on press */
+  box-shadow: 0px 0px 5px #0072ff; /* decrease the box-shadow on press */
+}
+/* Add styling for the Navbar button */
+.navbar-button-container {
+  position: absolute;
+  top: 20px; /* set the top position */
+  left: 20px; /* set the right position */
+}
+
+.navbar-button {
+  background-color: #fff; /* set the background color */
+  color: #0072ff; /* set the text color */
+  padding: 10px 20px; /* set the padding */
+  font-size: 18px; /* set the font size */
+  text-transform: uppercase; /* set the text-transform */
+  border-radius: 10px; /* set the border-radius */
+  text-decoration: none; /* remove the underline */
+  box-shadow: 0px 0px 10px #0072ff; /* add a box-shadow */
+  transition: background-color 0.3s ease;
+}
+
+/* Change button color on hover */
+.navbar-button:hover {
+  background-color: #0072ff;
+  color: #fff;
+}
+
+/* Add animation */
+.navbar-button:active {
+  transform: translateY(4px); /* move the button down on press */
+  box-shadow: 0px 0px 5px #0072ff; /* decrease the box-shadow on press */
+}
+
+
+/* Add shape 1 */
+.shape.shape-1 {
+  top: 0;
+  left: 0;
+}
+/* Add shape 2 */
+.shape.shape-2 {
+  top: 0;
+  right: 0;
+}
+/* Add shape 3 */
+.shape.shape-3 {
+  bottom: 0;
+  left: 0;
+}
+/* Add shape 4 */
+.shape.shape-4 {
+  bottom: 0;
+  right: 0;
+}
+/* Add shape 5 */
+.shape.shape-5 {
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* Add shape 6 */
+.shape.shape-6 {
+  top: 70%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+    </style>
+  </head>
+  <body>
+<form action="/button_press" method="POST">
+  <div class="button-grid">
+    <button class="button" type="submit" name="button" value="EmergencySTOP">Emergency STOP</button>
+    <button class="button" type="submit" name="button" value="LightsOFF">Lights off</button>
+    <button class="button" type="submit" name="button" value="LightsON">lights on</button>
+    <button class="button" type="submit" name="button" value="CoolKIDMODE">cool kid mode</button>
+    <button class="button" type="submit" name="button" value="LGBTQMODE">LGBTQ mode</button>
+    <button class="button" type="submit" name="button" value="TrackHUMANS">track humans</button>
+  </div>
+</form>
+
+<form action="/" method="POST">
+  <input type="submit" name="navbar" value="Navbar" class="buttonN navbar-buttonN">
+</form>
+<div class="shape shape-5"></div>
+<!-- Add Navbar button in the top right corner -->
+<!--<div class="navbar-button-container">-->
+<!--  <a href="/" class="buttonN navbar-button">Navbar</a>-->
+<!--</div>-->
+
+  </body>
+</html>
