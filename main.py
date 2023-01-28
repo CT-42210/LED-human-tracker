@@ -28,6 +28,7 @@ while True:
 
     # Draw bounding boxes on the frame
     for box in boxes:
+        print(box.shape)
         xmin, ymin, xmax, ymax = box
         cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 0, 255), 2)
 
