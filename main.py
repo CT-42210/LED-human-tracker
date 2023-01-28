@@ -17,7 +17,7 @@ while True:
     ret, frame = cap.read()
 
     # Pre-processing: resize and normalize
-    frame = cv2.resize(frame, (192, 192))
+    frame = cv2.resize(frame, (320, 320))
     frame = frame / 255.0
 
     # Run inference
