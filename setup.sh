@@ -7,10 +7,6 @@ then
   #force updates
   sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
-  #fix ethernet problem
-  echo 'interface eth0' /etc/dhcpcd.conf
-  echo 'nogateway' /etc/dhcpcd.conf
-
   #clone our code
   cd Desktop || exit
   git clone https://github.com/CT-42210/LED-human-tracker
