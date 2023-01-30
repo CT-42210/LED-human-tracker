@@ -7,4 +7,6 @@ then
   #fix ethernet problem
   echo 'interface eth0' /etc/dhcpcd.conf
   echo 'nogateway' /etc/dhcpcd.conf
+
+  sudo reboot
 fi
