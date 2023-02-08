@@ -1,6 +1,7 @@
 from datetime import datetime
 from dotenv.main import load_dotenv
 import os
+import numpy as np
 
 import cv2
 import pandas
@@ -21,13 +22,13 @@ y_res_int = int(os.environ['Y_RES'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture(1)
 video.set(cv2.CAP_PROP_FRAME_WIDTH, x_res_int)
 video.set(cv2.CAP_PROP_FRAME_HEIGHT, y_res_int)
 
 check, frame = video.read()
 
-while True:
+while video.isOpened():
 
     check, frame2 = video.read()
 
@@ -47,6 +48,23 @@ while True:
 
     thresh_frame = cv2.threshold(diff_frame, thresh_int, 255, cv2.THRESH_BINARY)[1]
     thresh_frame = cv2.dilate(thresh_frame, None, iterations=2)
+
+    # Copy the thresholded image.
+    im_floodfill = thresh_frame.copy()
+
+    # Mask used to flood filling.
+    # Notice the size needs to be 2 pixels than the image.
+    h, w = thresh_frame.shape[:2]
+    mask = np.zeros((h + 2, w + 2), np.uint8)
+
+    # Floodfill from point (0, 0)
+    cv2.floodFill(im_floodfill, mask, (0, 0), 255);
+
+    # Invert floodfilled image
+    im_floodfill_inv = cv2.bitwise_not(im_floodfill)
+
+    # Combine the two images to get the foreground.
+    im_out = thresh_frame | im_floodfill_inv
 
     display_frame = frame2.copy()
 
@@ -83,6 +101,9 @@ while True:
 
     if any(ext == 'c' for ext in display_setting):
         cv2.imshow("Color Frame", display_frame)
+
+    if any(ext == 'f' for ext in display_setting):
+        cv2.imshow("Flood Frame", im_out)
 
     frame = frame2
 
