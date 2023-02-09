@@ -1,7 +1,6 @@
 from datetime import datetime
 from dotenv.main import load_dotenv
 import os
-import numpy as np
 
 import cv2
 import pandas
@@ -13,22 +12,24 @@ motion_list = [None, None]
 time = []
 
 load_dotenv()
-display_setting = list(os.environ['DISPLAY_CONFIG'])
 blur_int = int(os.environ['BLUR'])
+print(blur_int)
 scores_int = int(os.environ['SCORES'])
+print(scores_int)
 thresh_int = int(os.environ['THRESH'])
-x_res_int = int(os.environ['X_RES'])
-y_res_int = int(os.environ['Y_RES'])
+print(thresh_int)
+display_setting = os.environ['DISPLAY']
+print(display_setting)
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
 video = cv2.VideoCapture(0)
-video.set(cv2.CAP_PROP_FRAME_WIDTH, x_res_int)
-video.set(cv2.CAP_PROP_FRAME_HEIGHT, y_res_int)
+video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 check, frame = video.read()
 
-while video.isOpened():
+while True:
 
     check, frame2 = video.read()
 
@@ -48,17 +49,6 @@ while video.isOpened():
 
     thresh_frame = cv2.threshold(diff_frame, thresh_int, 255, cv2.THRESH_BINARY)[1]
     thresh_frame = cv2.dilate(thresh_frame, None, iterations=2)
-
-    im_floodfill = thresh_frame.copy()
-
-    h, w = thresh_frame.shape[:2]
-    mask = np.zeros((h + 2, w + 2), np.uint8)
-
-    cv2.floodFill(im_floodfill, mask, (0, 0), 255);
-
-    im_floodfill_inv = cv2.bitwise_not(im_floodfill)
-
-    im_out = thresh_frame | im_floodfill_inv
 
     display_frame = frame2.copy()
 
@@ -84,20 +74,17 @@ while video.isOpened():
     if motion_list[-1] == 0 and motion_list[-2] == 1:
         time.append(datetime.now())
 
-    if any(ext == "g" for ext in display_setting):
+    if any(ext == "gray" for ext in display_setting):
         cv2.imshow("Gray Frame", gray2)
 
-    if any(ext == "d" for ext in display_setting):
+    if any(ext == "diff" for ext in display_setting):
         cv2.imshow("Difference Frame", diff_frame)
 
-    if any(ext == "t" for ext in display_setting):
+    if any(ext == "thresh" for ext in display_setting):
         cv2.imshow("Threshold Frame", thresh_frame)
 
-    if any(ext == 'c' for ext in display_setting):
+    if any(ext == 'color' for ext in display_setting):
         cv2.imshow("Color Frame", display_frame)
-
-    if any(ext == 'f' for ext in display_setting):
-        cv2.imshow("Flood Frame", im_out)
 
     frame = frame2
 
