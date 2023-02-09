@@ -22,7 +22,7 @@ y_res_int = int(os.environ['Y_RES'])
 
 df = pandas.DataFrame(columns=["Start", "End"])
 
-video = cv2.VideoCapture(1)
+video = cv2.VideoCapture(0)
 video.set(cv2.CAP_PROP_FRAME_WIDTH, x_res_int)
 video.set(cv2.CAP_PROP_FRAME_HEIGHT, y_res_int)
 
