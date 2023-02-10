@@ -11,8 +11,7 @@ import importlib.util
 class VideoStream:
 
     def __init__(self, resolution=(640, 480), framerate=30):
-        video_capture = cv2.VideoCapture(0)
-        self.stream = cv2.flip(video_capture, 0)
+        self.stream = cv2.VideoCapture(0)
         ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
         ret = self.stream.set(3, resolution[0])
         ret = self.stream.set(4, resolution[1])
@@ -209,6 +208,7 @@ while True:
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
                 cv2.LINE_AA)
 
+    frame_flip = cv2.flip(frame, 0)
     cv2.imshow('Object detector', frame)
 
     t2 = cv2.getTickCount()
