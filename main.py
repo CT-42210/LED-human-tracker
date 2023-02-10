@@ -11,8 +11,8 @@ import importlib.util
 class VideoStream:
 
     def __init__(self, resolution=(640, 480), framerate=30):
-        self.stream = cv2.VideoCapture(0)
-        self.stream = cv2.flip()
+        video_capture = cv2.VideoCapture(0)
+        self.stream = cv2.flip(video_capture, 0)
         ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
         ret = self.stream.set(3, resolution[0])
         ret = self.stream.set(4, resolution[1])
