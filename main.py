@@ -209,7 +209,7 @@ while True:
                 cv2.LINE_AA)
 
     frame_flip = cv2.flip(frame, 0)
-    cv2.imshow('Object detector', frame)
+    cv2.imshow('Object detector', frame_flip)
 
     t2 = cv2.getTickCount()
     time1 = (t2 - t1) / freq
