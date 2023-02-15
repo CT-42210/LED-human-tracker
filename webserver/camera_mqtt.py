@@ -2,20 +2,9 @@ import paho.mqtt.client as mqtt
 
 client = mqtt.Client()
 
-
-# when using the mqtt_setup make sure that the string is a b'' string
-def mqtt_setup():
+def mqtt_send(text):
     # MQTT client setup
     client.connect("broker.hivemq.com", 1883, 60)
-
-
-def mqtt_send(text):
     client.publish("hello_world", text)
 
-
-# mqtt_setup()
-# mqtt_send(b"cheese")
-
-
-mqtt_setup()
 mqtt_send("bruh why wont this work")
