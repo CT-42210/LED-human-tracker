@@ -17,3 +17,5 @@ def mqtt_send(text):
 # mqtt_send(b"cheese")
 
 
+mqtt_setup()
+mqtt_send("bruh why wont this work")

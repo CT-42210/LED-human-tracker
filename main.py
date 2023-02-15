@@ -171,17 +171,17 @@ while True:
             object_name = labels[int(classes[i])]
             if object_name == 'person':
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
-                label = '%s: %d%%' % (object_name, int(scores[i] * 100))  # Example: 'person: 72%'
+
+                label = '%s: %d%%' % (object_name, int(scores[i] * 100))
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
-                label_ymin = max(ymin, labelSize[1] + 10)  # Make sure not to draw label too close to top of window
+                label_ymin = max(ymin, labelSize[1] + 10)
                 cv2.rectangle(frame, (xmin, label_ymin - labelSize[1] - 10),
-                              (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255),
-                              cv2.FILLED)  # Draw white box to put label text in
-                cv2.putText(frame, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0),
-                            2)
+                              (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
+                cv2.putText(frame, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+                cv2.circle(frame, center_x, center_y, (0, 125, 230), 4, 3)
 
                 if (10 <= center_x <= 500) and (10 <= center_y <= 400):
-                    pass
+                    print("in range")
 
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
                 cv2.LINE_AA)
