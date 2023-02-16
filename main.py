@@ -48,8 +48,6 @@ class VideoStream:
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
-                    required=True)
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
                     default='detect.tflite')
 parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
@@ -179,8 +177,8 @@ while True:
                               (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
                 cv2.putText(frame, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
-                cv2.line((center_x - 20), center_y, (center_x + 20), center_y)
-                cv2.line(center_x, (center_y - 20), center_x, (center_y + 20))
+                cv2.line((int(center_x) - 20), int(center_y), (int(center_x) + 20), int(center_y))
+                cv2.line(int(center_x), (int(center_y) - 20), int(center_x), (int(center_y) + 20))
 
 
                 if (10 <= center_x <= 500) and (10 <= center_y <= 400):
