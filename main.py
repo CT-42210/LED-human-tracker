@@ -178,7 +178,10 @@ while True:
                 cv2.rectangle(frame, (xmin, label_ymin - labelSize[1] - 10),
                               (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
                 cv2.putText(frame, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-                cv2.circle(frame, center_x, center_y, (0, 125, 230), 4, 3)
+
+                cv2.line((center_x - 20), center_y, (center_x + 20), center_y)
+                cv2.line(center_x, (center_y - 20), center_x, (center_y + 20))
+
 
                 if (10 <= center_x <= 500) and (10 <= center_y <= 400):
                     print("in range")
