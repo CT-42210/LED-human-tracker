@@ -179,7 +179,6 @@ while True:
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
 
-
                 if (10 <= center_x <= 500) and (10 <= center_y <= 400):
                     print("in range")
 
