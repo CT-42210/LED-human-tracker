@@ -15,7 +15,7 @@ while True:
         cv2.imwrite(f'/Desktop/test-images/c{num}.png', frame)
         num = num + 1
 
-    if cv2.waitkey(1) == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         cv2.destroyAllWindows()
         break
 
