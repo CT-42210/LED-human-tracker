@@ -8,8 +8,6 @@ import importlib.util
 
 # Define and parse input arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
-                    required=True)
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
                     default='detect.tflite')
 parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
@@ -31,7 +29,7 @@ LABELMAP_NAME = args.labels
 min_conf_threshold = float(args.threshold)
 use_TPU = args.edgetpu
 
-save_results = args.save_results
+save_results = True
 show_results = args.noshow_results
 
 IM_DIR = '/home/pi/Desktop/test-images'
