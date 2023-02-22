@@ -183,7 +183,8 @@ for image_path in images:
 
     with open(txt_savepath, 'w') as txt_file:
         for detection in detections:
-            print(detections)
-            txt_file.write('%s %.4f %d %d %d %d\n' % detections)
+            print(detection[0], detection[1], detection[2], detection[3], detection[4], detection[5])
+            txt_file.write('%s %.4f %d %d %d %d\n' % (detection[0], detection[1], detection[2], detection[3],
+                                                      detection[4], detection[5]))
 
 cv2.destroyAllWindows()
