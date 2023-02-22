@@ -40,7 +40,6 @@ class VideoStream:
 
     def read(self):
         # Return the most recent frame
-        cv2.rotate(self.frame, cv2.ROTATE_180)
         return self.frame
 
     def stop(self):
@@ -132,6 +131,7 @@ frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
 videostream = VideoStream(resolution=(imW, imH), framerate=30).start()
+cv2.rotate(videostream, cv2.ROTATE_180)
 time.sleep(1)
 
 while True:
