@@ -63,11 +63,7 @@ if IM_DIR:
     PATH_TO_IMAGES = os.path.join(CWD_PATH, IM_DIR)
     images = glob.glob(PATH_TO_IMAGES + '/*.jpg') + glob.glob(PATH_TO_IMAGES + '/*.png') + glob.glob(
         PATH_TO_IMAGES + '/*.bmp')
-    if save_results:
-        RESULTS_DIR = IM_DIR + '_results'
-
-# Create results directory if user wants to save results
-if save_results:
+    RESULTS_DIR = IM_DIR + '_results'
     RESULTS_PATH = os.path.join(CWD_PATH, RESULTS_DIR)
     if not os.path.exists(RESULTS_PATH):
         os.makedirs(RESULTS_PATH)
