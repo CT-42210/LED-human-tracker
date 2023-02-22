@@ -14,7 +14,7 @@ while True:
     cv2.imshow('img1', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('y'):
-        cv2.imwrite(f'/Desktop/test-images/c{num}.png', frame)
+        cv2.imwrite(f'/home/pi/Desktop/test-images/c{num}.png', frame)
         num = num + 1
     elif cv2.waitKey(1) == ord('q'):
         cv2.destroyAllWindows()
