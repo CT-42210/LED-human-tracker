@@ -16,12 +16,6 @@ parser.add_argument('--labels', help='Name of the labelmap file, if different th
                     default='labelmap.txt')
 parser.add_argument('--threshold', help='Minimum confidence threshold for displaying detected objects',
                     default=0.5)
-parser.add_argument('--image',
-                    help='Name of the single image to perform detection on. To run detection on multiple images, use --imagedir',
-                    default=None)
-parser.add_argument('--imagedir',
-                    help='Name of the folder containing images to perform detection on. Folder must contain only images.',
-                    default=None)
 parser.add_argument('--noshow_results', help='Don\'t show result images (only use this if --save_results is enabled)',
                     action='store_false')
 parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed up detection',
@@ -30,7 +24,7 @@ parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed u
 args = parser.parse_args()
 
 # Parse user inputs
-MODEL_NAME = args.modeldir
+MODEL_NAME = '/home/pi/tfl/Sample_TFLite_model'
 GRAPH_NAME = args.graph
 LABELMAP_NAME = args.labels
 
@@ -40,18 +34,7 @@ use_TPU = args.edgetpu
 save_results = args.save_results
 show_results = args.noshow_results
 
-IM_NAME = args.image
-IM_DIR = args.imagedir
-
-# If both an image AND a folder are specified, throw an error
-if (IM_NAME and IM_DIR):
-    print(
-        'Error! Please only use the --image argument or the --imagedir argument, not both. Issue "python TFLite_detection_image.py -h" for help.')
-    sys.exit()
-
-# If neither an image or a folder are specified, default to using 'test1.jpg' for image name
-if (not IM_NAME and not IM_DIR):
-    IM_NAME = 'test1.jpg'
+IM_DIR = '/home/pi/Desktop/test-images'
 
 # Import TensorFlow libraries
 # If tflite_runtime is installed, import interpreter from tflite_runtime, else import from regular tensorflow
@@ -84,12 +67,6 @@ if IM_DIR:
         PATH_TO_IMAGES + '/*.bmp')
     if save_results:
         RESULTS_DIR = IM_DIR + '_results'
-
-elif IM_NAME:
-    PATH_TO_IMAGES = os.path.join(CWD_PATH, IM_NAME)
-    images = glob.glob(PATH_TO_IMAGES)
-    if save_results:
-        RESULTS_DIR = 'results'
 
 # Create results directory if user wants to save results
 if save_results:
@@ -171,31 +148,28 @@ for image_path in images:
     detections = []
 
     for i in range(len(scores)):
-        if (scores[i] > min_conf_threshold) and (scores[i] <= 1.0):
-            ymin = int(max(1, (boxes[i][0] * imH)))
-            xmin = int(max(1, (boxes[i][1] * imW)))
-            ymax = int(min(imH, (boxes[i][2] * imH)))
-            xmax = int(min(imW, (boxes[i][3] * imW)))
+        for i in range(len(scores)):
+            if (scores[i] > min_conf_threshold) and (scores[i] <= 1.0):
+                ymin = int(max(1, (boxes[i][0] * imH)))
+                xmin = int(max(1, (boxes[i][1] * imW)))
+                ymax = int(min(imH, (boxes[i][2] * imH)))
+                xmax = int(min(imW, (boxes[i][3] * imW)))
 
-            center_x = int((xmin + xmax) / 2)
-            center_y = int((ymin + ymax) / 2)
+                center_x = int((xmin + xmax) / 2)
+                center_y = int((ymin + ymax) / 2)
 
-            object_name = labels[int(classes[i])]
-            if object_name == 'person':
-                cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
+                object_name = labels[int(classes[i])]
+                if object_name == 'person':
+                    cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
-                label = '%s: %d%%' % (object_name, int(scores[i] * 100))
-                labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
-                label_ymin = max(ymin, labelSize[1] + 10)
-                cv2.rectangle(image, (xmin, label_ymin - labelSize[1] - 10),
-                              (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
-                cv2.putText(image, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-                cv2.circle(image, center_x, center_y, (0, 125, 230), 4, 3)
+                    label = '%s: %d%%' % (object_name, int(scores[i] * 100))
+                    labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
+                    label_ymin = max(ymin, labelSize[1] + 10)
+                    cv2.rectangle(image, (xmin, label_ymin - labelSize[1] - 10),
+                                  (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
+                    cv2.putText(image, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
-                if (10 <= center_x <= 500) and (10 <= center_y <= 400):
-                    print("in range")
-
-                detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
+                    cv2.circle(image, (center_x, center_y), 4, (255, 0, 0), 1)
 
     cv2.imshow('Object detector', image)
 
