@@ -5,7 +5,7 @@ camera = cv2.VideoCapture(0)
 camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-with open("/home/pi/Desktop/test-images/c-count", "w+") as c_read:
+with open("/home/pi/Desktop/test-images/c-count", "r+") as c_read:
     c_num = c_read.read()
     print(c_num)
 
