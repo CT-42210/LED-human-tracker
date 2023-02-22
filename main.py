@@ -131,7 +131,6 @@ frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
 videostream = VideoStream(resolution=(imW, imH), framerate=30).start()
-cv2.rotate(videostream, cv2.ROTATE_180)
 time.sleep(1)
 
 while True:
@@ -143,7 +142,8 @@ while True:
     # Acquire frame and resize to expected shape [1xHxWx3]
     frame = frame1.copy()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_resized = cv2.resize(frame_rgb, (width, height))
+    frame_rotate = cv2.rotate(frame_rgb, cv2.ROTATE_180)
+    frame_resized = cv2.resize(frame_rotate, (width, height))
     input_data = np.expand_dims(frame_resized, axis=0)
 
     # Normalize pixel values if using a floating model (i.e. if model is non-quantized)
