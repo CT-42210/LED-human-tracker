@@ -75,8 +75,8 @@ PATH_TO_CKPT = os.path.join(CWD_PATH, MODEL_NAME, GRAPH_NAME)
 PATH_TO_LABELS = os.path.join(CWD_PATH, MODEL_NAME, LABELMAP_NAME)
 
 # Load the label map
-with open(PATH_TO_LABELS, 'r') as f:
-    labels = [line.strip() for line in f.readlines()]
+with open(PATH_TO_LABELS, 'r') as txt_file:
+    labels = [line.strip() for line in txt_file.readlines()]
 
 # Have to do a weird fix for label map if using the COCO "starter model" from
 # https://www.tensorflow.org/lite/models/object_detection/overview
@@ -179,9 +179,10 @@ for image_path in images:
 
     cv2.imwrite(image_savepath, image)
 
-    with open(txt_savepath, 'w') as f:
+    with open(txt_savepath, 'w') as txt_file:
         for detection in detections:
-            f.write('%s %.4f %d %d %d %d\n' % (
-            detection[0], detection[1], detection[2], detection[3], detection[4], detection[5]))
+            print(detection[0], detection[1], detection[2], detection[3], detection[4], detection[5])
+            txt_file.write('%s %.4f %d %d %d %d\n' % (detection[0], detection[1], detection[2], detection[3],
+                                                      detection[4], detection[5]))
 
 cv2.destroyAllWindows()
