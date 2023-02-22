@@ -17,6 +17,7 @@ with open("/home/pi/Desktop/test-images/c-count", "r") as c_read:
         if cv2.waitKey(1) & 0xFF == ord('y'):
             c_num = int(c_num) + 1
             cv2.imwrite(f'/home/pi/Desktop/test-images/c{c_num}.png', frame)
+            print(str(c_num))
             c_read.write(str(c_num))
 
         elif cv2.waitKey(1) == ord('q'):
