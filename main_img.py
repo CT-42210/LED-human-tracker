@@ -165,6 +165,8 @@ for image_path in images:
 
                     cv2.circle(image, (center_x, center_y), 4, (255, 0, 0), 1)
 
+                    detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
+
     cv2.imshow('Object detector', image)
 
     if cv2.waitKey(0) == ord('q'):
