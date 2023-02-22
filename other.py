@@ -17,6 +17,7 @@ while True:
         if c_num == '':
             c_num = 1
         c_num = int(c_num) + 1
+        cv2.imwrite(f'/home/pi/Desktop/test-images/c{c_num}.png', frame)
         print(str(c_num))
 
     elif cv2.waitKey(1) == ord('q'):
