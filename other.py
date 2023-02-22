@@ -16,7 +16,10 @@ while True:
 
     if cv2.waitKey(1) & 0xFF == ord('y'):
         cv2.imwrite(f'/home/pi/Desktop/test-images/c{c_num}.png', frame)
-        num = num + 1
+        c_num = c_num + 1
+        with open("c-count", "w") as c_write:
+            c_read.write(c_num)
+
     elif cv2.waitKey(1) == ord('q'):
         cv2.destroyAllWindows()
         break
