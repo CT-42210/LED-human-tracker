@@ -13,11 +13,10 @@ while True:
     cv2.rotate(frame, cv2.ROTATE_180)
     cv2.imshow('img1', frame)
 
-    if cv2.waitKey(0) & 0xFF == ord('y'):
+    if cv2.waitKey(1) & 0xFF == ord('y'):
         cv2.imwrite(f'/Desktop/test-images/c{num}.png', frame)
         num = num + 1
-
-    if cv2.waitKey(1) == ord('q'):
+    elif cv2.waitKey(1) == ord('q'):
         cv2.destroyAllWindows()
         break
 
