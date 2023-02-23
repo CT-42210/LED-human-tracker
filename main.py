@@ -31,7 +31,6 @@ class VideoStream:
         while True:
             # If the camera is stopped, stop the thread
             if self.stopped:
-                # Close camera resources
                 self.stream.release()
                 return
 
@@ -39,14 +38,12 @@ class VideoStream:
             (self.grabbed, self.frame) = self.stream.read()
 
     def read(self):
-        # Return the most recent frame
         return self.frame
 
     def stop(self):
-        # Indicate that the camera and thread should be stopped
         self.stopped = True
 
-
+# old, must delete
 parser = argparse.ArgumentParser()
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
                     default='detect.tflite')
@@ -171,12 +168,13 @@ while True:
             if object_name == 'person':
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
-                label = '%s: %d%%' % (object_name, int(scores[i] * 100))
-                labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
+                label1 = '%s: %d%%' % (object_name, int(scores[i] * 100))
+                label2 = f"({center_x}, {center_y})"
+                labelSize, baseLine = cv2.getTextSize(label1, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10)
                 cv2.rectangle(frame, (xmin, label_ymin - labelSize[1] - 10),
                               (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
-                cv2.putText(frame, label, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+                cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
 
