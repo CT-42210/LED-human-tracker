@@ -177,9 +177,10 @@ while True:
                 cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
+                print(label2)
 
-                if (10 <= center_x <= 500) and (10 <= center_y <= 400):
-                    print("in range")
+#                if (10 <= center_x <= 500) and (10 <= center_y <= 400):
+#                    break
 
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
                 cv2.LINE_AA)
