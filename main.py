@@ -5,7 +5,7 @@ import numpy as np
 import time
 from threading import Thread
 import importlib.util
-import transmit
+import transmiter
 
 
 class VideoStream:
