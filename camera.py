@@ -1,17 +1,27 @@
 import cv2
 
-# Initialize the camera
-cap = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0)
+
+camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+c_num = 1
 
 while True:
-    # Capture video frame by frame
-    ret, frame = cap.read()
+    ret, frame = camera.read()
 
-    # Display the resulting frame
-    cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    cv2.rotate(frame, cv2.ROTATE_180)
+    cv2.imshow('img1', frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('y'):
+        if c_num == '':
+            c_num = 1
+        c_num = int(c_num) + 1
+        cv2.imwrite(f'/home/pi/Desktop/test-images/c{c_num}.png', frame)
+        print(str(c_num))
+
+    elif cv2.waitKey(1) == ord('q'):
+        cv2.destroyAllWindows()
         break
 
-# Release the camera
-cap.release()
-cv2.destroyAllWindows()
+camera.release()
