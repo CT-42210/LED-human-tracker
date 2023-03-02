@@ -24,6 +24,4 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
-while True:
-    color_chase(OFF, 0)
-    break
+color_chase(OFF, 0)
