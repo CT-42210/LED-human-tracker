@@ -44,6 +44,7 @@ class VideoStream:
     def stop(self):
         self.stopped = True
 
+
 # old, must delete
 parser = argparse.ArgumentParser()
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
@@ -71,10 +72,12 @@ use_TPU = args.edgetpu
 pkg = importlib.util.find_spec('tflite_runtime')
 if pkg:
     from tflite_runtime.interpreter import Interpreter
+
     if use_TPU:
         from tflite_runtime.interpreter import load_delegate
 else:
     from tensorflow.lite.python.interpreter import Interpreter
+
     if use_TPU:
         from tensorflow.lite.python.interpreter import load_delegate
 
@@ -184,9 +187,8 @@ while True:
                     transmit.publish("bruh", "section1")
                     print("section1")
                 elif (250 < center_x <= 500) and (10 <= center_y <= 400):
-                    transmit.publish("bruh", "section1")
-                    print("section1")
-
+                    transmit.publish("bruh", "section2")
+                    print("section2")
 
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
                 cv2.LINE_AA)
