@@ -184,10 +184,10 @@ while True:
                 print(label2)
 
                 if (10 <= center_x <= 250) and (10 <= center_y <= 400):
-                    mqtt_functions.publish("bruh", "section1")
+                    mqtt_functions.publish("bruh/1", "section1")
                     print("section1")
                 elif (250 < center_x <= 500) and (10 <= center_y <= 400):
-                    mqtt_functions.publish("bruh", "section2")
+                    mqtt_functions.publish("bruh/1", "section2")
                     print("section2")
 
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
