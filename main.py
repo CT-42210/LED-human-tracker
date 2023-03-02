@@ -5,6 +5,7 @@ import numpy as np
 import time
 from threading import Thread
 import importlib.util
+import mqtt-send
 
 
 class VideoStream:
@@ -179,8 +180,10 @@ while True:
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
                 print(label2)
 
-#                if (10 <= center_x <= 500) and (10 <= center_y <= 400):
-#                    break
+                if (10 <= center_x <= 500) and (10 <= center_y <= 400):
+                    mqtt_send.publish("bruh", "section1")
+                    print("section1")
+                    break
 
     cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
                 cv2.LINE_AA)
