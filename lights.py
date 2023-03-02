@@ -7,7 +7,13 @@ import neopixel
 pixel_pin = board.D18
 
 input1 = input("Enter the number of pixels: ")
+
+if int(input1) <= 20:
+    print("ERROR: cannot be less than 20")
+    sys.exit()
+
 input2 = input("Enter the offset of the start of the illuminated pixels: ")
+
 num_pixels = int(input1)
 offset = int(input2)
 
