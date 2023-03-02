@@ -8,6 +8,12 @@ num_pixels = 200
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=0.3)
 
+def color_chase(color, wait):
+    for i in range(num_pixels):
+        pixels[i] = color
+        time.sleep(wait)
+        pixels.show()
+    time.sleep(0.5)
 
 def rainbow_cycle(wait):
     for j in range(255):
