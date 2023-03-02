@@ -5,8 +5,11 @@ from rainbowio import colorwheel
 import neopixel
 
 pixel_pin = board.D18
-num_pixels = 200
-offset = 0
+
+input1 = input("Enter the number of pixels: ")
+input2 = input("Enter the offset of the start of the illuminated pixels: ")
+num_pixels = int(input1)
+offset = int(input2)
 
 pixels = neopixel.NeoPixel(pixel_pin, 200, brightness=0.3, auto_write=False)
 
