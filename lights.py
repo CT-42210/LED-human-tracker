@@ -35,9 +35,10 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
+user_input = input("Enter 'q' to quit: ")
+
 while True:
     rainbow_cycle(0)
-    user_input = input("Enter 'q' to quit: ")
 
     if user_input == "q":
         break
