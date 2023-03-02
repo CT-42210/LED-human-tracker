@@ -23,6 +23,7 @@ def rainbow_cycle(wait):
         for i in range(num_pixels):
             rc_index = (i * 256 // num_pixels) + j
             pixels[i] = colorwheel(rc_index & 255)
+            print(rc_index)
         pixels.show()
         time.sleep(wait)
 
@@ -39,9 +40,3 @@ user_input = input("Enter 'q' to quit: ")
 
 while True:
     rainbow_cycle(0)
-
-    if user_input == "q":
-        break
-
-color_chase(OFF, 0)
-sys.exit()
