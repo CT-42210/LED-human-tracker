@@ -35,11 +35,12 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
-user_input = input("Enter 'q' to quit: ")
-
 while True:
-    while user_input != "q":
-        rainbow_cycle(0)
-    else:
-        color_chase(OFF, 0)
-        sys.exit()
+    rainbow_cycle(0)
+    user_input = input("Enter 'q' to quit: ")
+
+    if user_input == "q":
+        break
+
+color_chase(OFF, 0)
+sys.exit()
