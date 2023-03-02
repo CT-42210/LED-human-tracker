@@ -32,7 +32,11 @@ GREEN = (0, 255, 0)
 CYAN = (0, 255, 255)
 BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
+OFF = (0, 0, 0)
 
 while True:
-
+    user_input = input("Enter 'q' to quit: ")
+    if user_input == "q":
+        color_chase(OFF, 0)
+        break
     rainbow_cycle(0)
