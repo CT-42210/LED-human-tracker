@@ -29,3 +29,4 @@ OFF = (0, 0, 0)
 while True:
     color_chase(CYAN, 0)
     offset = int(input("- "))
+    color_chase(OFF, 0)
