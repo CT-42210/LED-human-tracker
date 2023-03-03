@@ -26,6 +26,6 @@ pixel_num = int(input("number of pixels: "))
 while True:
     offset = int(input("- "))
     color_chase(OFF, 0, offset)
-    color_chase(CYAN, offset, pixel_num)
+    color_chase(CYAN, offset, offset + pixel_num)
     color_chase(OFF, pixel_num + offset, 200)
     print(f"0,{offset}\n{offset},{pixel_num}\n{pixel_num + offset}, 200")
