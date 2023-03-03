@@ -28,3 +28,4 @@ while True:
     color_chase(OFF, 0, offset)
     color_chase(CYAN, offset, pixel_num)
     color_chase(OFF, pixel_num + offset, 200)
+    print(f"0,{offset}\n{offset},{pixel_num}\n{pixel_num + offset}, 200")
