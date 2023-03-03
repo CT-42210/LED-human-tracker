@@ -24,5 +24,5 @@ OFF = (0, 0, 0)
 
 # offset = int(input("- "))
 while True:
-    #color_chase(OFF, 0, 20)
-    color_chase(CYAN, 20, 50)
+    color_chase(OFF, 0, 10)
+    color_chase(CYAN, 10, 50)
