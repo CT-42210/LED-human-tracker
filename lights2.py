@@ -22,7 +22,9 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
-# offset = int(input("- "))
+pixels = int(input("number of pixels: "))
 while True:
-    color_chase(OFF, 0, 10)
-    color_chase(CYAN, 10, 50)
+    offset = int(input("- "))
+    color_chase(OFF, 0, offset)
+    color_chase(CYAN, offset, pixels)
+    color_chase(OFF, pixels + offset, 200)
