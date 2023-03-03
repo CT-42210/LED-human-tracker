@@ -4,13 +4,11 @@ import neopixel
 
 pixel_pin = board.D18
 
-num_pixels = 20
-offset = int(input("- "))
 
 pixels = neopixel.NeoPixel(pixel_pin, 200, brightness=0.3, auto_write=False)
 
 
-def color_chase(color, wait):
+def color_chase(color, wait, offset, num_pixels):
     for i in range(offset, num_pixels):
         pixels[i] = color
         time.sleep(wait)
@@ -27,6 +25,6 @@ PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
 while True:
-    color_chase(CYAN, 0)
     offset = int(input("- "))
-    color_chase(OFF, 0)
+    color_chase(OFF, 0, 0, 10)
+    color_chase(CYAN, 0, 10, 10)
