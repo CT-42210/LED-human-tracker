@@ -17,7 +17,7 @@ OFF = (0, 0, 0)
 
 def neo_sweep(np, strip_length, color, width):
     bkgnd = []
-    for i in range(strip_length + width):
+    for i in range(strip_length):
         erase = i - width
         if erase >= 0:
             np[erase] = bkgnd.pop()
