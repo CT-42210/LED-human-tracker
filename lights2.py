@@ -36,13 +36,11 @@ while True:
     if offset >= old_offset:
         color_chase(OFF, 0, offset, reverse=False)
         color_chase(CYAN, offset, offset + pixel_num, reverse=False)
-        color_chase(OFF, pixel_num + offset, 200, reverse=False)
-        print(f"0,{offset}\n{offset},{pixel_num}\n{pixel_num + offset}, 200")
+        color_chase(OFF, pixel_num + offset, 100, reverse=False)
     elif offset <= old_offset:
         if offset >= old_offset:
-            color_chase(OFF, 0, offset, reverse=True)
+            color_chase(OFF, pixel_num + offset, 100, reverse=True)
             color_chase(CYAN, offset, offset + pixel_num, reverse=True)
-            color_chase(OFF, pixel_num + offset, 200, reverse=True)
-            print(f"0,{offset}\n{offset},{pixel_num}\n{pixel_num + offset}, 200")
+            color_chase(OFF, 0, offset, reverse=True)
 
     old_offset = offset
