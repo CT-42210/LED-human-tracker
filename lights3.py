@@ -17,16 +17,32 @@ OFF = (0, 0, 0)
 
 def neo_sweep(np, start, stop, color, width):
     bkgnd = []
-    for i in range(start, stop):
-        erase = i - width
-        if erase >= 0:
-            np[erase] = bkgnd.pop()
 
-        if i < stop:
-            bkgnd.insert(0, np[i])
-            np[i] = color
+    if start < stop:
+        for i in range(start, stop):
+            erase = i - width
+            if erase >= 0:
+                np[erase] = bkgnd.pop()
 
-        np.show()
+            if i < stop:
+                bkgnd.insert(0, np[i])
+                np[i] = color
 
+            np.show()
+    if start > stop:
+        for i in reversed(range(start, stop)):
+            erase = i - width
+            if erase >= 0:
+                np[erase] = bkgnd.pop()
 
-neo_sweep(pixels, 0, 100, RED, 10)
+            if i < stop:
+                bkgnd.insert(0, np[i])
+                np[i] = color
+
+            np.show()
+
+start_input = int(input("enter start: "))
+stop_input = int(input("enter stop: "))
+width_input = int(input("enter width: "))
+
+neo_sweep(pixels, start_input, stop_input, RED, width_input)
