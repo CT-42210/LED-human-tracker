@@ -15,10 +15,10 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
-def neo_sweep(np, color, width, ):
+def neo_sweep(np, color, width):
     bkgnd = []
     num_pixels = len(np)
-    for i in range(num_pixels + width):
+    for i in range(num_pixels + width, 100):
         erase = i - width
         if erase >= 0:
             np[erase] = bkgnd.pop()
