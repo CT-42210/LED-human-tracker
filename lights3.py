@@ -4,8 +4,7 @@ import neopixel
 
 pixel_pin = board.D18
 
-pixels = neopixel.NeoPixel(pixel_pin, 200, brightness=0.3, auto_write=False)
-
+pixels = neopixel.NeoPixel(pixel_pin, 100, brightness=0.3, auto_write=False)
 
 RED = (255, 0, 0)
 YELLOW = (255, 150, 0)
@@ -15,18 +14,19 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
-def neo_sweep(np, color, width):
+
+def neo_sweep(np, strip_length, color, width):
     bkgnd = []
-    num_pixels = len(np)
-    for i in range(num_pixels + width, 100):
+    for i in range(strip_length + width):
         erase = i - width
         if erase >= 0:
             np[erase] = bkgnd.pop()
 
-        if i < num_pixels:
+        if i < strip_length:
             bkgnd.insert(0, np[i])
             np[i] = color
 
         np.show()
 
-neo_sweep(pixels, RED, 10)
+
+neo_sweep(pixels, len(pixels), RED, 10)
