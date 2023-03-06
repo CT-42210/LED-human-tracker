@@ -30,7 +30,7 @@ def neo_sweep(np, start, stop, color, width):
 
             np.show()
     if start > stop:
-        for i in reversed(range(start, stop)):
+        for i in reversed(range(stop, start)):
             erase = i - width
             if erase >= 0:
                 np[erase] = bkgnd.pop()
