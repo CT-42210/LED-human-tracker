@@ -44,3 +44,5 @@ while True:
             color_chase(CYAN, offset, offset + pixel_num, reverse=True)
             color_chase(OFF, pixel_num + offset, 200, reverse=True)
             print(f"0,{offset}\n{offset},{pixel_num}\n{pixel_num + offset}, 200")
+
+    old_offset = offset
