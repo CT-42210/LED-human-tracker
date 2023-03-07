@@ -26,8 +26,7 @@ def neo_sweep(np, start, stop, color, width, bkgnd):
                     bkgnd.insert(0, np[i])
                     np[i] = color
 
-                with np:
-                    np.show()
+                np.show()
 
         elif start > stop:
             if start < stop:
@@ -39,8 +38,8 @@ def neo_sweep(np, start, stop, color, width, bkgnd):
                         bkgnd.insert(0, np[i])
                         np[i] = color
 
-                    with np:
-                        np.show()
+                    np.show()
+
     except IndexError:
         pass
 
