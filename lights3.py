@@ -29,16 +29,16 @@ def neo_sweep(np, start, stop, color, width, bkgnd):
                 np.show()
 
         elif start > stop:
-            if start < stop:
-                for i in reversed(range(stop, start)):
-                    erase = i + width
-                    if erase < len(np):
-                        np[erase] = bkgnd.pop()
-                    if i >= start:
-                        bkgnd.insert(0, np[i])
-                        np[i] = color
+            for i in reversed(range(stop, start)):
+                erase = i + width
+                if erase < len(np):
+                    np[erase] = bkgnd.pop()
 
-                    np.show()
+                if i >= start:
+                    bkgnd.insert(0, np[i])
+                    np[i] = color
+
+                np.show()
 
     except IndexError:
         pass
