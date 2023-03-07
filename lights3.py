@@ -30,7 +30,7 @@ def neo_sweep(np, start, stop, color, width, bkgnd):
 
         elif start > stop:
             if start < stop:
-                for i in reversed(range(start, stop)):
+                for i in reversed(range(stop, start)):
                     erase = i + width
                     if erase < len(np):
                         np[erase] = bkgnd.pop()
@@ -50,4 +50,5 @@ start_input = int(input("enter start: "))
 stop_input = int(input("enter stop: "))
 width_input = int(input("enter width: "))
 
-neo_sweep(pixels, start_input, stop_input, RED, width_input, background)
+while True:
+    neo_sweep(pixels, start_input, stop_input, RED, width_input, background)
