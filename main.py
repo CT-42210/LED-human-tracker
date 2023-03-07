@@ -197,7 +197,7 @@ while True:
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
                 print(label2)
 
-                mqtt.publish("bruh/1", f"({center_x}, {center_y})")
+                client.publish("bruh/1", f"({center_x}, {center_y})")
 
                 #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
                 #    mqtt_functions.publish("bruh/1", "section1")
