@@ -1,4 +1,3 @@
-import time
 import board
 import neopixel
 
@@ -15,34 +14,41 @@ PURPLE = (180, 0, 255)
 OFF = (0, 0, 0)
 
 
-def neo_sweep(np, start, stop, color, width):
-    bkgnd = []
+def neo_sweep(np, start, stop, color, width, bkgnd):
+    try:
+        if start < stop:
+            for i in range(start, stop):
+                erase = i - width
+                if erase >= 0:
+                    np[erase] = bkgnd.pop()
 
-    if start < stop:
-        for i in range(start, stop):
-            erase = i - width
-            if erase >= 0:
-                np[erase] = bkgnd.pop()
+                if i < stop:
+                    bkgnd.insert(0, np[i])
+                    np[i] = color
 
-            if i < stop:
-                bkgnd.insert(0, np[i])
-                np[i] = color
+                with np:
+                    np.show()
 
-            np.show()
-    if start > stop:
-        for i in reversed(range(stop, start)):
-            erase = i - width
-            if erase >= 0:
-                np[erase] = bkgnd.pop()
+        elif start > stop:
+            if start < stop:
+                for i in reversed(range(start, stop)):
+                    erase = i + width
+                    if erase < len(np):
+                        np[erase] = bkgnd.pop()
+                    if i >= start:
+                        bkgnd.insert(0, np[i])
+                        np[i] = color
 
-            if i < start:
-                bkgnd.insert(0, np[i])
-                np[i] = color
+                    with np:
+                        np.show()
+    except IndexError:
+        pass
 
-            np.show()
+
+background = []
 
 start_input = int(input("enter start: "))
 stop_input = int(input("enter stop: "))
 width_input = int(input("enter width: "))
 
-neo_sweep(pixels, start_input, stop_input, RED, width_input)
+neo_sweep(pixels, start_input, stop_input, RED, width_input, background)
