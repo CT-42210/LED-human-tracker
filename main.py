@@ -6,6 +6,20 @@ import time
 from threading import Thread
 import importlib.util
 import mqtt_functions
+import paho.mqtt.client as mqtt
+
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+    client.subscribe("section1")
+
+
+client = mqtt.Client()
+client.on_connect = on_connect
+
+client.connect("broker.hivemq.com", 1883, 60)
+
+client.loop_start()
 
 
 class VideoStream:
@@ -183,7 +197,7 @@ while True:
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
                 print(label2)
 
-                mqtt_functions.publish("bruh/1", f"({center_x}, {center_y})")
+                mqtt.publish("bruh/1", f"({center_x}, {center_y})")
 
                 #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
                 #    mqtt_functions.publish("bruh/1", "section1")
