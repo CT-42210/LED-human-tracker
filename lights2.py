@@ -5,7 +5,7 @@ import neopixel
 pixel_pin = board.D18
 
 
-pixels = neopixel.NeoPixel(pixel_pin, 200, brightness=0.3, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, 100, brightness=0.3, auto_write=False)
 
 
 def color_chase(color, offset, num_pixels, reverse):
