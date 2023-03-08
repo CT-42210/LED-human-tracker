@@ -185,9 +185,6 @@ while True:
             object_name = labels[int(classes[i])]
             if object_name == 'person':
 
-                print(i)
-                print(object_name)
-
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
                 label1 = '%s: %d%%' % (object_name, int(scores[i] * 100))
@@ -199,6 +196,9 @@ while True:
                 cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
+
+                center_cords = f"({center_x[i]}, {center_y[i]})"
+                print(center_cords)
 
 
                 #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
@@ -212,8 +212,6 @@ while True:
                 cv2.LINE_AA)
 
     cv2.imshow('Object detector', frame)
-
-    #center_cords = f"({center_x}, {center_y})"
 
 
 
