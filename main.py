@@ -172,6 +172,8 @@ while True:
     classes = interpreter.get_tensor(output_details[classes_idx]['index'])[0]
     scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0]
 
+    center_coords_list = []
+
     for i in range(len(scores)):
         if (scores[i] > min_conf_threshold) and (scores[i] <= 1.0):
             ymin = int(max(1, (boxes[i][0] * imH)))
@@ -182,8 +184,12 @@ while True:
             center_x = int((xmin + xmax) / 2)
             center_y = int((ymin + ymax) / 2)
 
+
             object_name = labels[int(classes[i])]
             if object_name == 'person':
+
+                center_coords = (center_x, center_y)
+                center_coords_list.append(center_coords)
 
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
@@ -197,8 +203,7 @@ while True:
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
 
-                center_cords = f"({center_x[i]}, {center_y[i]})"
-                print(center_cords)
+                print(center_coords_list)
 
 
                 #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
