@@ -49,6 +49,10 @@ class VideoStream:
                 self.stream.release()
                 return
 
+            grabbed, frame = self.stream.read()
+            rotated_frame = cv2.rotate(frame, cv2.ROTATE_180)
+            self.frame = rotated_frame if grabbed else None
+
             # Otherwise, grab the next frame from the stream
             (self.grabbed, self.frame) = self.stream.read()
 
@@ -184,10 +188,8 @@ while True:
             center_x = int((xmin + xmax) / 2)
             center_y = int((ymin + ymax) / 2)
 
-
             object_name = labels[int(classes[i])]
             if object_name == 'person':
-
                 center_coords = (center_x, center_y)
                 center_coords_list.append(center_coords)
 
@@ -204,12 +206,12 @@ while True:
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
 
                 print(center_coords_list)
+                client.publish("bruh/1", center_coords_list)
 
-
-                #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
+                # if (10 <= center_x <= 250) and (10 <= center_y <= 400):
                 #    mqtt_functions.publish("bruh/1", "section1")
                 #    print("section1")
-                #elif (250 < center_x <= 500) and (10 <= center_y <= 400):
+                # elif (250 < center_x <= 500) and (10 <= center_y <= 400):
                 #    mqtt_functions.publish("bruh/1", "section2")
                 #    print("section2")
 
@@ -217,10 +219,6 @@ while True:
                 cv2.LINE_AA)
 
     cv2.imshow('Object detector', frame)
-
-
-
-    #client.publish("bruh/1", transmit_list)
 
     t2 = cv2.getTickCount()
     time1 = (t2 - t1) / freq
