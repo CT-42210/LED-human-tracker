@@ -212,11 +212,11 @@ while True:
 
     cv2.imshow('Object detector', frame)
 
-    center_cords = f"({center_x}, {center_y})"
+    #center_cords = f"({center_x}, {center_y})"
 
 
 
-    client.publish("bruh/1", transmit_list)
+    #client.publish("bruh/1", transmit_list)
 
     t2 = cv2.getTickCount()
     time1 = (t2 - t1) / freq
