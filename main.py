@@ -184,6 +184,10 @@ while True:
 
             object_name = labels[int(classes[i])]
             if object_name == 'person':
+
+                for i in range(boxes):
+                    print(boxes[i])
+
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
                 label1 = '%s: %d%%' % (object_name, int(scores[i] * 100))
@@ -195,9 +199,7 @@ while True:
                 cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
-                print(label2)
 
-                client.publish("bruh/1", f"({center_x}, {center_y})")
 
                 #if (10 <= center_x <= 250) and (10 <= center_y <= 400):
                 #    mqtt_functions.publish("bruh/1", "section1")
@@ -210,6 +212,12 @@ while True:
                 cv2.LINE_AA)
 
     cv2.imshow('Object detector', frame)
+
+    center_cords = f"({center_x}, {center_y})"
+
+
+
+    client.publish("bruh/1", transmit_list)
 
     t2 = cv2.getTickCount()
     time1 = (t2 - t1) / freq
