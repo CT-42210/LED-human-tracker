@@ -186,6 +186,7 @@ while True:
             if object_name == 'person':
 
                 print(i)
+                print(object_name)
 
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
