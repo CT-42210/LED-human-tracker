@@ -185,8 +185,7 @@ while True:
             object_name = labels[int(classes[i])]
             if object_name == 'person':
 
-                for i in range(boxes):
-                    print(boxes[i])
+                print(i)
 
                 cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
 
