@@ -49,10 +49,6 @@ class VideoStream:
                 self.stream.release()
                 return
 
-            grabbed, frame = self.stream.read()
-            rotated_frame = cv2.rotate(frame, cv2.ROTATE_180)
-            self.frame = rotated_frame if grabbed else None
-
             # Otherwise, grab the next frame from the stream
             (self.grabbed, self.frame) = self.stream.read()
 
