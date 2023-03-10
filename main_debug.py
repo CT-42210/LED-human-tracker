@@ -67,17 +67,26 @@ class VideoStream:
 
 # old, must delete
 parser = argparse.ArgumentParser()
-resolution = '1280x720'
+parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
+                    default='detect.tflite')
+parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
+                    default='labelmap.txt')
+parser.add_argument('--threshold', help='Minimum confidence threshold for displaying detected objects',
+                    default=0.5)
+parser.add_argument('--resolution', help='Desired webcam resolution in WxH. If the webcam does not support the '
+                                         'resolution entered, errors may occur.',
+                    default='1280x720')
 parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed up detection',
                     action='store_true')
 
 args = parser.parse_args()
 
 MODEL_NAME = '/home/pi/tfl/Sample_TFLite_model'
-GRAPH_NAME = 'detect.tflite'
-LABELMAP_NAME = 'labelmap.txt'
-min_conf_threshold = float(0.5)
-resW, resH = resolution.split('x')
+GRAPH_NAME = args.graph
+LABELMAP_NAME = args.labels
+min_conf_threshold = float(args.threshold)
+print(f"min threshhold: {min_conf_threshold}")
+resW, resH = args.resolution.split('x')
 imW, imH = int(resW), int(resH)
 print(f"image width: '{imW}'")
 print(f"image hight: '{imH}'")
@@ -142,6 +151,8 @@ if 'StatefulPartitionedCall' in outname:  # This is a TF2 model
 else:  # This is a TF1 model
     boxes_idx, classes_idx, scores_idx = 0, 1, 2
 
+frame_rate_calc = 1
+freq = cv2.getTickFrequency()
 
 videostream = VideoStream(resolution=(imW, imH), framerate=30).start()
 time.sleep(1)
@@ -186,3 +197,40 @@ while True:
             if object_name == 'person':
                 center_coords = (center_x, center_y)
                 center_coords_list.append(center_coords)
+
+                cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)
+
+                label1 = '%s: %d%%' % (object_name, int(scores[i] * 100))
+                label2 = f"({center_x}, {center_y})"
+                labelSize, baseLine = cv2.getTextSize(label1, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
+                label_ymin = max(ymin, labelSize[1] + 10)
+                cv2.rectangle(frame, (xmin, label_ymin - labelSize[1] - 10),
+                              (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
+                cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+
+                cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
+
+                print(center_coords_list)
+                client.publish("RP4_WCAM_HLTRACKERP1", str(center_coords_list))
+
+                # if (10 <= center_x <= 250) and (10 <= center_y <= 400):
+                #    mqtt_functions.publish("bruh/1", "section1")
+                #    print("section1")
+                # elif (250 < center_x <= 500) and (10 <= center_y <= 400):
+                #    mqtt_functions.publish("bruh/1", "section2")
+                #    print("section2")
+
+    cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2,
+                cv2.LINE_AA)
+
+    cv2.imshow('Object detector', frame)
+
+    t2 = cv2.getTickCount()
+    time1 = (t2 - t1) / freq
+    frame_rate_calc = 1 / time1
+
+    if cv2.waitKey(1) == ord('q'):
+        break
+# hello
+cv2.destroyAllWindows()
+videostream.stop()
