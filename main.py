@@ -88,6 +88,8 @@ min_conf_threshold = float(args.threshold)
 print(f"min threshhold: {min_conf_threshold}")
 resW, resH = args.resolution.split('x')
 imW, imH = int(resW), int(resH)
+print(f"image width: '{imW}'")
+print(f"image hight: '{imH}'")
 use_TPU = args.edgetpu
 
 pkg = importlib.util.find_spec('tflite_runtime')
