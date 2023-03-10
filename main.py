@@ -204,9 +204,9 @@ while True:
                 label2 = f"({center_x}, {center_y})"
                 labelSize, baseLine = cv2.getTextSize(label1, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10)
-                cv2.rectangle(frame, (xmin, label_ymin - labelSize[1] - 10),
-                              (xmin + labelSize[0], label_ymin + baseLine - 10), (255, 255, 255), cv2.FILLED)
-                cv2.putText(frame, label2, (xmin, label_ymin - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+                cv2.rectangle(frame, (label_ymin - labelSize[1] - 10, xmin),
+                              (label_ymin + baseLine - 10, xmin + labelSize[0]), (255, 255, 255), cv2.FILLED)
+                cv2.putText(frame, label2, (label_ymin - 7, xmin), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
                 cv2.circle(frame, (center_x, center_y), 4, (255, 0, 0), 1)
 
