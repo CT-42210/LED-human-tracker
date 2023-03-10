@@ -85,6 +85,7 @@ MODEL_NAME = '/home/pi/tfl/Sample_TFLite_model'
 GRAPH_NAME = args.graph
 LABELMAP_NAME = args.labels
 min_conf_threshold = float(args.threshold)
+print(f"min threshhold: {min_conf_threshold}")
 resW, resH = args.resolution.split('x')
 imW, imH = int(resW), int(resH)
 use_TPU = args.edgetpu
