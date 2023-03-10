@@ -49,9 +49,14 @@ class VideoStream:
                 self.stream.release()
                 return
 
-            # Otherwise, grab the next frame from the stream
-            (self.grabbed, self.frame) = self.stream.read()
+            grabbed, frame = self.stream.read()
+
+            if not grabbed:
+                continue
+
             frame = cv2.rotate(frame, cv2.ROTATE_180)
+
+            self.frame = frame
 
     def read(self):
         return self.frame
