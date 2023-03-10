@@ -185,10 +185,10 @@ while True:
 
     for i in range(len(scores)):
         if (scores[i] > min_conf_threshold) and (scores[i] <= 1.0):
-            ymin = int(max(1, (boxes[i][0] * imH)))
-            xmin = int(max(1, (boxes[i][1] * imW)))
-            ymax = int(min(imH, (boxes[i][2] * imH)))
-            xmax = int(min(imW, (boxes[i][3] * imW)))
+            ymin = imH - int(max(1, (boxes[i][0] * imH)))
+            xmin = imW - int(max(1, (boxes[i][1] * imW)))
+            ymax = imH - int(min(imH, (boxes[i][2] * imH)))
+            xmax = imW - int(min(imW, (boxes[i][3] * imW)))
 
             center_x = int((xmin + xmax) / 2)
             center_y = int((ymin + ymax) / 2)
