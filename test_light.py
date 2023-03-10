@@ -7,7 +7,10 @@ import ast
 
 client = mqtt.Client()
 client.connect("broker.hivemq.com", 1883, 60)
+
+# this is for scyncing pixels to led_strip
 LED_multiplication_number = 0.04
+
 LED_LIGHTS = 100
 pixels = neopixel.NeoPixel(board.D18, LED_LIGHTS)
 
