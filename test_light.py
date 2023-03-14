@@ -35,6 +35,7 @@ def splice_message(payload):
 #   output = return's new color, however also controls LED lights, and stops script if "stop" is recieved
 #   purpose --> control LED lights and change color of strip
 def ledHandler(message, color):
+    active_leds = []
 
     if message == "stop":
         client.disconnect()
@@ -43,10 +44,18 @@ def ledHandler(message, color):
     elif isinstance(message, list):
         for cord in message:
             pixel_num = round(cord[0]*LED_multiplication_number)
+
+            active_leds.append(pixel_num)
+
             pixels[round(cord[0]*LED_multiplication_number)] = color
             pixels[pixel_num+1] = color
             pixels[pixel_num-1] = color
             print(cord[0])
+        for led_pixel in range(100):
+            if led_pixel not in active_leds:
+                pixels[led_pixel] = [0, 0, 0]
+            else:
+                pass
     else:
         pass
 
@@ -78,7 +87,8 @@ def setup(topic_name):
     # MQTT client setup
 
     def on_message(client, userdata, msg):
-        pixels.fill((0, 0, 0))
+        # the fill shouldn't be necessary anymore
+        # pixels.fill((0, 0, 0))
         if msg.topic == topic_name:
             string_list = str(msg.payload).replace("b", "")
             string_list = string_list.replace("'", "")
